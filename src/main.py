@@ -1,5 +1,3 @@
-# src/main.py
-
 from shelter import Shelter
 from dog import Dog
 from cat import Cat
@@ -17,15 +15,16 @@ def display_main_menu():
 
 def add_pet(shelter):
     pet_type = input("Enter pet type (dog/cat): ").lower()
+    id = input("Enter pet ID: ")
     name = input("Enter pet's name: ")
     breed = input("Enter breed: ")
     age = input("Enter age: ")
     description = input("Enter description: ")
 
     if pet_type == 'dog':
-        new_pet = Dog(name, breed, age, description)
+        new_pet = Dog(id, name, breed, int(age), description)
     elif pet_type == 'cat':
-        new_pet = Cat(name, breed, age, description)
+        new_pet = Cat(id, name, breed, int(age), description)
     else:
         print("Invalid pet type.")
         return
@@ -67,7 +66,7 @@ def adopt_pet(shelter):
     name = input("Enter the name of the pet to adopt: ")
     adopted_pet = shelter.adopt_pet(name)
     if adopted_pet:
-        print(f"Congratulations! You've adopted {adopted_pet.name}.")
+        print(f"Congratulations! You've adopted {adopted_pet.get_name()}.")
     else:
         print("Pet not found.")
 
@@ -110,9 +109,9 @@ def main():
             load_shelter_data(shelter)
         elif choice == '8':
             print("Exiting the system. Goodbye!")
-        break
-    else:
-        print("Invalid option. Please try again.")
+            break
+        else:
+            print("Invalid option. Please try again.")
 
 if __name__ == "__main__":
     main()

@@ -1,11 +1,14 @@
-# src/pet.py
-
 class Pet:
-    def __init__(self, name, breed, age, description):
+    def __init__(self, id, name, breed, age, description, adopted=False):
+        self._id = id
         self._name = name
         self._breed = breed
         self._age = age
         self._description = description
+        self._adopted = adopted
+
+    def get_id(self):
+        return self._id
 
     def get_name(self):
         return self._name
@@ -19,20 +22,14 @@ class Pet:
     def get_description(self):
         return self._description
 
-    def set_name(self, name):
-        self._name = name
+    def is_adopted(self):
+        return self._adopted
 
-    def set_breed(self, breed):
-        self._breed = breed
-
-    def set_age(self, age):
-        self._age = age
-
-    def set_description(self, description):
-        self._description = description
+    def set_adopted(self, adopted):
+        self._adopted = adopted
 
     def __str__(self):
-        return f"{self._name} ({self._breed}, {self._age} years old)"
+        return f"{self._name} ({self._breed}, {self._age} years old, ID: {self._id}, Adopted: {'Yes' if self._adopted else 'No'})"
 
     def detailed_info(self):
-        return f"Name: {self._name}\nBreed: {self._breed}\nAge: {self._age} years\nDescription: {self._description}"
+        return f"Name: {self._name}\nBreed: {self._breed}\nAge: {self._age} years\nDescription: {self._description}\nAdopted: {'Yes' if self._adopted else 'No'}"
