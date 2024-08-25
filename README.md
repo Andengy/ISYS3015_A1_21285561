@@ -55,6 +55,13 @@ The Pet Adoption System is a command-line application designed to manage pet inf
     pytest
     ```
 
+## Further information can be founded below 
+Amos, David. 2023. “Python 3 Object-Oriented Programming.” Real Python. https://realpython.com/python3-object-oriented-programming/.
+
+W3Schools. N.d. “Python Classes and Objects.” W3Schools. https://www.w3schools.in/python/classes-objects.
+
+W3Schools. N.d. “Python Object Methods.” W3Schools. https://www.w3schools.com/python/gloss_python_object_methods.asp.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
