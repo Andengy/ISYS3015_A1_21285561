@@ -59,7 +59,7 @@ def search_pets(shelter):
     if results:
         for pet in results:
             print(pet.detailed_info())
-            print("-----------")  # Separator added here
+            print("-----------")
     else:
         print("No pets found matching your criteria.")
 
