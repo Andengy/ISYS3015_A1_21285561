@@ -20,11 +20,12 @@ def add_pet(shelter):
     breed = input("Enter breed: ")
     age = input("Enter age: ")
     description = input("Enter description: ")
+    notes = input("Enter any special notes about the pet: ")
 
     if pet_type == 'dog':
-        new_pet = Dog(id, name, breed, int(age), description)
+        new_pet = Dog(id, name, breed, int(age), description, notes=notes)
     elif pet_type == 'cat':
-        new_pet = Cat(id, name, breed, int(age), description)
+        new_pet = Cat(id, name, breed, int(age), description, notes=notes)
     else:
         print("Invalid pet type.")
         return
@@ -71,12 +72,25 @@ def adopt_pet(shelter):
         print("Pet not found.")
 
 def display_pet_details(shelter):
-    name = input("Enter the pet's name: ")
-    pet = shelter.get_pet_details(name)
-    if pet:
-        print(pet.detailed_info())
-    else:
-        print("Pet not found.")
+    while True:
+        name = input("Enter the pet's name: ")
+        pet = shelter.get_pet_details(name)
+        if pet:
+            print(pet.detailed_info())
+            action = input("Type 'adopt' to proceed with adoption, 'details' to view another pet, or 'menu' to return to the main menu: ").lower()
+            if action == 'adopt':
+                shelter.adopt_pet(name)
+                break
+            elif action == 'details':
+                continue
+            elif action == 'menu':
+                break
+            else:
+                print("Invalid choice, returning to main menu.")
+                break
+        else:
+            print("Pet not found. Returning to the main menu.")
+            break
 
 def save_shelter_data(shelter):
     shelter.save_data()
