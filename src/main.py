@@ -4,6 +4,7 @@ from cat import Cat
 
 def display_main_menu():
     print("=== Welcome to the Pet Adoption System ===")
+    print("+++ Please Press '7' to load data before continuing +++")
     print("1. List all pets")
     print("2. Add a new pet")
     print("3. Search for a pet")
@@ -79,7 +80,7 @@ def display_pet_details(shelter):
             print(pet.detailed_info())
             action = input("Type 'adopt' to proceed with adoption, 'details' to view another pet, or 'menu' to return to the main menu: ").lower()
             if action == 'adopt':
-                shelter.adopt_pet(name)
+                adopt_pet(shelter)
                 break
             elif action == 'details':
                 continue
