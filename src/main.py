@@ -4,15 +4,13 @@ from cat import Cat
 
 def display_main_menu():
     print("=== Welcome to the Pet Adoption System ===")
-    print("+++ Please Press '7' to load data before continuing +++")
     print("1. List all pets")
     print("2. Add a new pet")
     print("3. Search for a pet")
     print("4. Adopt a pet")
     print("5. Display pet details")
     print("6. Save shelter data")
-    print("7. Load shelter data")
-    print("8. Exit")
+    print("7. Exit")
 
 def add_pet(shelter):
     pet_type = input("Enter pet type (dog/cat): ").lower()
@@ -41,6 +39,7 @@ def list_pets(shelter):
         print("=== All Pets in the Shelter ===")
         for pet in pets:
             print(pet.detailed_info())
+            print("-----------")  
 
 def search_pets(shelter):
     search_option = input("Search by: 1. Type 2. Breed 3. Age\nEnter your choice (1-3): ")
@@ -60,8 +59,10 @@ def search_pets(shelter):
     if results:
         for pet in results:
             print(pet.detailed_info())
+            print("-----------")  # Separator added here
     else:
         print("No pets found matching your criteria.")
+
 
 def adopt_pet(shelter):
     name = input("Enter the name of the pet to adopt: ")
@@ -110,7 +111,7 @@ def main():
     
     while True:
         display_main_menu()
-        choice = input("Enter your choice (1-8): ")
+        choice = input("Enter your choice (1-7): ")
         
         if choice == '1':
             list_pets(shelter)
@@ -125,9 +126,6 @@ def main():
         elif choice == '6':
             save_shelter_data(shelter)
         elif choice == '7':
-            load_shelter_data(shelter)
-        elif choice == '8':
-            # Automatically save data before exiting
             save_shelter_data(shelter)
             print("Exiting the system. Goodbye!")
             break
