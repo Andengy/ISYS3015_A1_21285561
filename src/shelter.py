@@ -48,7 +48,7 @@ class Shelter:
         """Get detailed information about a pet by name."""
         for pet in self.pets:
             if pet.get_name().lower() == name.lower():
-                return pet.detailed_info()
+                return pet  # Return the Pet object itself
         print(f"No pet named {name} found.")
         return None
 
@@ -76,9 +76,12 @@ class Shelter:
             reader = csv.reader(file)
             next(reader)  # Skip the header
             for row in reader:
+                if len(row) != 8:
+                    print(f"Skipping malformed row: {row}")
+                    continue
                 id, name, species, breed, age, adopted, description, notes = row
                 adopted = adopted == 'Yes'
                 if species == 'Dog':
-                    self.add_pet(Dog(id, name, breed, int(age), description=description, adopted=adopted, notes=notes))
+                    self.add_pet(Dog(id, name, breed, int(age), description, notes=notes, adopted=adopted))
                 elif species == 'Cat':
-                    self.add_pet(Cat(id, name, breed, int(age), description=description, adopted=adopted, notes=notes))
+                    self.add_pet(Cat(id, name, breed, int(age), description, notes=notes, adopted=adopted))
