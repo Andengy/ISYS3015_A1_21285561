@@ -35,39 +35,24 @@ class Shelter:
         """Adopt a pet from the shelter by name."""
         for pet in self.pets:
             if pet.get_name().lower() == name.lower():
-                if pet.is_adopted():
-                    print(f"{pet.get_name()} is already adopted.")
-                else:
-                    pet.set_adopted(True)
-                    print(f"{pet.get_name()} has been adopted.")
+                pet.set_adopted(True)
                 return pet
-        print(f"No pet named {name} found.")
         return None
 
     def get_pet_details(self, name):
         """Get detailed information about a pet by name."""
         for pet in self.pets:
             if pet.get_name().lower() == name.lower():
-                return pet  # Return the Pet object itself
-        print(f"No pet named {name} found.")
+                return pet
         return None
 
     def save_data(self, filename='data/pets.csv'):
         """Save shelter data to a CSV file."""
         with open(filename, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(['ID', 'Name', 'Species', 'Breed', 'Age', 'Adopted', 'Description', 'Notes'])
+            writer.writerow(['ID', 'Name', 'Species', 'Breed', 'Age', 'Adopted'])
             for pet in self.pets:
-                writer.writerow([
-                    pet.get_id(),
-                    pet.get_name(),
-                    'Dog' if isinstance(pet, Dog) else 'Cat',
-                    pet.get_breed(),
-                    pet.get_age(),
-                    'Yes' if pet.is_adopted() else 'No',
-                    pet.get_description(),
-                    pet.get_notes()
-                ])
+                writer.writerow([pet.get_id(), pet.get_name(), 'Dog' if isinstance(pet, Dog) else 'Cat', pet.get_breed(), pet.get_age(), 'Yes' if pet.is_adopted() else 'No'])
 
     def load_data(self, filename='data/pets.csv'):
         """Load shelter data from a CSV file."""
@@ -76,12 +61,17 @@ class Shelter:
             reader = csv.reader(file)
             next(reader)  # Skip the header
             for row in reader:
-                if len(row) != 8:
+                if len(row) != 6:
                     print(f"Skipping malformed row: {row}")
                     continue
-                id, name, species, breed, age, adopted, description, notes = row
+
+                id, name, species, breed, age, adopted = row
                 adopted = adopted == 'Yes'
+                description = ''  # Default description if not provided
+                
                 if species == 'Dog':
-                    self.add_pet(Dog(id, name, breed, int(age), description, notes=notes, adopted=adopted))
+                    self.add_pet(Dog(id, name, breed, int(age), description, adopted))
                 elif species == 'Cat':
-                    self.add_pet(Cat(id, name, breed, int(age), description, notes=notes, adopted=adopted))
+                    self.add_pet(Cat(id, name, breed, int(age), description, adopted))
+                else:
+                    print(f"Unknown species {species} in row: {row}")

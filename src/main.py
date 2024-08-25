@@ -21,12 +21,11 @@ def add_pet(shelter):
     breed = input("Enter breed: ")
     age = input("Enter age: ")
     description = input("Enter description: ")
-    notes = input("Enter any special notes about the pet: ")
 
     if pet_type == 'dog':
-        new_pet = Dog(id, name, breed, int(age), description, notes=notes)
+        new_pet = Dog(id, name, breed, int(age), description)
     elif pet_type == 'cat':
-        new_pet = Cat(id, name, breed, int(age), description, notes=notes)
+        new_pet = Cat(id, name, breed, int(age), description)
     else:
         print("Invalid pet type.")
         return
@@ -41,7 +40,7 @@ def list_pets(shelter):
     else:
         print("=== All Pets in the Shelter ===")
         for pet in pets:
-            print(pet)
+            print(pet.detailed_info())
 
 def search_pets(shelter):
     search_option = input("Search by: 1. Type 2. Breed 3. Age\nEnter your choice (1-3): ")
@@ -60,7 +59,7 @@ def search_pets(shelter):
 
     if results:
         for pet in results:
-            print(pet)
+            print(pet.detailed_info())
     else:
         print("No pets found matching your criteria.")
 
@@ -73,25 +72,12 @@ def adopt_pet(shelter):
         print("Pet not found.")
 
 def display_pet_details(shelter):
-    while True:
-        name = input("Enter the pet's name: ")
-        pet = shelter.get_pet_details(name)
-        if pet:
-            print(pet.detailed_info())
-            action = input("Type 'adopt' to proceed with adoption, 'details' to view another pet, or 'menu' to return to the main menu: ").lower()
-            if action == 'adopt':
-                adopt_pet(shelter)
-                break
-            elif action == 'details':
-                continue
-            elif action == 'menu':
-                break
-            else:
-                print("Invalid choice, returning to main menu.")
-                break
-        else:
-            print("Pet not found. Returning to the main menu.")
-            break
+    name = input("Enter the pet's name: ")
+    pet = shelter.get_pet_details(name)
+    if pet:
+        print(pet.detailed_info())
+    else:
+        print("Pet not found.")
 
 def save_shelter_data(shelter):
     shelter.save_data()
@@ -101,9 +87,27 @@ def load_shelter_data(shelter):
     shelter.load_data()
     print("Shelter data loaded successfully.")
 
+def loading_phase(shelter):
+    while True:
+        print("=== Loading Data ===")
+        print("Press 1 to load data")
+        print("Press 2 to exit")
+        sequence = input("Enter your choice: ")
+        if sequence == "1":
+            load_shelter_data(shelter)
+            break
+        elif sequence == "2":
+            print("Exiting the application.")
+            exit()
+        else:
+            print("Invalid input. Please try again.")
+
 def main():
     shelter = Shelter()
-
+    
+    # Start with loading phase
+    loading_phase(shelter)
+    
     while True:
         display_main_menu()
         choice = input("Enter your choice (1-8): ")
@@ -123,6 +127,8 @@ def main():
         elif choice == '7':
             load_shelter_data(shelter)
         elif choice == '8':
+            # Automatically save data before exiting
+            save_shelter_data(shelter)
             print("Exiting the system. Goodbye!")
             break
         else:
